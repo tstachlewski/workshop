@@ -7,7 +7,7 @@ Celem zadania jest uruchomienie prostego serwera wirtualnego, na którym zostani
 1. W konsoli AWS przejdź do usługi EC2 gdzie wyszukaj opcję "Launch Instance".
 2. W ramach utworzonego wizarda pozostań przy wybranym obrazie AMI "Amazon Linux".
 3. W ramach trzeciego kroku pozostań przy domyślnej wielkości serwera "t2.micro"
-4. W ramach piątego kroku wizarda zmodyfikuj usutawienia zaawanowane "Advanced Details" - w tym celu wklej skrypt umieszczony w pliku "user_data.txt"
+4. W ramach piątego kroku wizarda zmodyfikuj usutawienia zaawanowane "Advanced Details" - w tym celu wklej skrypt umieszczony w pliku "scripts/UserData_InstallApache.txt"
 5. Na kroku czwartym wizarda dodaj drugi dysk do serwera. Dysk powinien mieć pojemność 10 MB. Zaznacz opcję "Delete on Termination"
 6. Na piątym kroku wizarda otaguj swój serwer, w tym celu dodaj następujące tagi:
 	Name : TwojeInicjaly
