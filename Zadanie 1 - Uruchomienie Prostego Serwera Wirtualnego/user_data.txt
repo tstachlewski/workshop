@@ -1,6 +1,9 @@
-#! /bin/bash
-apt-get update
-apt-get install -y apache2
+#!/bin/bash
+yum update -y
+yum install -y httpd24 php56 mysql55-server php56-mysqlnd
+service httpd start
+chkconfig httpd on
+
 
 cat <<EOF> /var/www/html/index.html
 <html>
