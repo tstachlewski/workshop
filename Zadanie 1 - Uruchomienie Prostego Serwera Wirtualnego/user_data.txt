@@ -1,1 +1,12 @@
-Test
+#! /bin/bash
+apt-get update
+apt-get install -y apache2
+
+cat <<EOF> /var/www/html/index.html
+<html>
+	<body>
+		<h1> This is simple webpage hosted on EC2 instance</h1>
+		<p> This is working! </p>
+	</body>
+</html>
+EOF
