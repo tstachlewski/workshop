@@ -1,4 +1,4 @@
-# Zadanie - Beanstalk  #
+# Zadanie - Beanstalk (prosta aplikacja PHP) #
 
 ## Cel zadania ##
 Celem zadania jest uruchomienie prostej strony WWW w opraciu o usługę PaaS Beanstalk
