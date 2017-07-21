@@ -1,0 +1,22 @@
+CREATE EXTERNAL TABLE IF NOT EXISTS people (
+  ID int,
+  age int,
+  firstname string,
+  lastname string,
+  country string,
+  sex string,
+  numberOfKids int,
+  revenue double,
+  leavingInCity string,
+  likeMusic string,
+  likeCinema string,
+  bankBalance double,
+  happinnessRatio double,
+  height int,
+  weight int
+)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
+WITH SERDEPROPERTIES (
+  'serialization.format' = ',',
+  'field.delim' = ','
+) LOCATION 's3://awspoland/bigdata/people1gb/'

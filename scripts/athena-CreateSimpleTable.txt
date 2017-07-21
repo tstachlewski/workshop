@@ -1,0 +1,12 @@
+CREATE EXTERNAL TABLE IF NOT EXISTS people_list (
+  age int,
+  firstname string,
+  lastname string,
+  weight int,
+  city string
+)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
+WITH SERDEPROPERTIES (
+  'serialization.format' = ',',
+  'field.delim' = ','
+) LOCATION 's3://BUCKET_NAME'
