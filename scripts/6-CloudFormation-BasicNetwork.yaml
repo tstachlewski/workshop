@@ -5,16 +5,16 @@ Resources:
     VPC:
         Type: AWS::EC2::VPC
         Properties:
-            CidrBlock: "10.0.0.0/16"
-            Tags:
+          CidrBlock: "10.0.0.0/16"
+          EnableDnsHostnames : True
+          EnableDnsSupport : True
+          Tags:
                 - Key: Name
                   Value: !Sub ${AWS::StackName}-VPC
     SubnetPublic1:
       Type: "AWS::EC2::Subnet"
       Properties:
         AvailabilityZone : "eu-west-1a"
-        EnableDnsHostnames : True
-        EnableDnsSupport : True
         CidrBlock: "10.0.1.0/24"
         MapPublicIpOnLaunch: True
         VpcId:
@@ -29,8 +29,6 @@ Resources:
         AvailabilityZone : "eu-west-1b"
         CidrBlock: "10.0.3.0/24"
         MapPublicIpOnLaunch: True
-        EnableDnsHostnames : True
-        EnableDnsSupport : True
         VpcId:
           Ref: VPC
         Tags:
@@ -43,8 +41,6 @@ Resources:
         AvailabilityZone : "eu-west-1a"
         CidrBlock: "10.0.2.0/24"
         MapPublicIpOnLaunch: True
-        EnableDnsHostnames : True
-        EnableDnsSupport : True
         VpcId:
           Ref: VPC
         Tags:
@@ -57,8 +53,6 @@ Resources:
         AvailabilityZone : "eu-west-1b"
         CidrBlock: "10.0.4.0/24"
         MapPublicIpOnLaunch: True
-        EnableDnsHostnames : True
-        EnableDnsSupport : True
         VpcId:
           Ref: VPC
         Tags:
