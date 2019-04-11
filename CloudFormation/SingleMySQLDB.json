@@ -1,0 +1,73 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "Creates single MySQL Database",
+
+  "Mappings" : {
+    "DatabaseSizes" : {
+      "Micro"     : { "instancetype" : "db.t2.micro"},
+      "Small"     : { "instancetype" : "db.t2.small"},
+      "Medium"    : { "instancetype" : "db.t2.medium"},
+      "Large"     : { "instancetype" : "db.t2.large"}
+    }
+  },
+
+  "Parameters" : {
+
+    "DBUser" : {
+      "Description" : "Database user",
+      "Type" : "String",
+      "Default" : "adminadmin1"
+    },
+
+    "DBPassword" : {
+      "Description" : "Database password",
+      "Type" : "String",
+      "Default" : "adminadmin1"
+    },
+
+    "DBName" : {
+      "Description" : "Database name",
+      "Type" : "String",
+      "Default" : "MyDatabase"
+    },
+
+    "DBSize" : {
+      "Description" : "Database size",
+      "Type" : "String",
+      "Default" : "Micro",
+      "AllowedValues" : [ "Micro", "Small", "Medium", "Large"],
+      "ConstraintDescription" : "You must select DB size"
+    },
+
+    "DBAllocatedStorage" : {
+      "Description" : "Disk size",
+      "Type" : "Number",
+      "Default" : "20",
+      "MaxValue" : "1000",
+      "MinValue"  : "20",
+      "ConstraintDescription" : "Disk size must be between 20 and 1000"
+    },
+
+  },
+
+
+  "Resources" : {
+
+
+    "NewMYSQLDB" : {
+      "Type" : "AWS::RDS::DBInstance",
+        "Properties" :
+        {
+          "DBName" : { "Ref" : "DBName" },
+          "AllocatedStorage" : { "Ref" : "DBAllocatedStorage" },
+          "DBInstanceClass" : { "Fn::FindInMap" : [ "DatabaseSizes", { "Ref" : "DBSize" }, "instancetype"]},
+          "Engine" : "MySQL",
+          "EngineVersion" : "5.5",
+          "MasterUsername" : { "Ref" : "DBUser" },
+          "MasterUserPassword" : { "Ref" : "DBPassword" },
+        }
+    }
+  }
+
+}

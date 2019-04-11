@@ -1,0 +1,77 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "Creates single Linux server",
+
+  "Mappings" : {
+    "ServerSizes" : {
+      "Small"     : { "instancetype" : "m4.large"},
+      "Medium"    : { "instancetype" : "m4.xlarge"},
+      "Big"       : { "instancetype" : "m4.2xlarge"},
+      "Huge"      : { "instancetype" : "m4.4xlarge"}
+    }
+  },
+
+
+  "Parameters" : {
+
+    "InstanceSize" : {
+      "Description" : "Server size",
+      "Type" : "String",
+      "Default" : "Small",
+      "AllowedValues" : [ "Small", "Medium", "Big", "Huge"],
+      "ConstraintDescription" : "You must select server size"
+    },
+
+    "KeyName": {
+      "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+      "Type": "AWS::EC2::KeyPair::KeyName",
+      "ConstraintDescription" : "Must be the name of an existing EC2 KeyPair."
+    },
+
+    "DiskSize" : {
+      "Description" : "Disk size",
+      "Type" : "Number",
+      "Default" : "20",
+      "MaxValue" : "1000",
+      "MinValue"  : "20",
+      "ConstraintDescription" : "Disk size must be between 20 and 1000"
+    },
+
+  },
+
+
+  "Resources" : {
+
+    "NewServer" : {
+       "Type" : "AWS::EC2::Instance",
+       "Properties" : {
+         "ImageId" : "ami-9398d3e0",
+         "KeyName" : { "Ref" : "KeyName" },
+         "InstanceType" : { "Fn::FindInMap" : [ "ServerSizes", { "Ref" : "InstanceSize" }, "instancetype"]},
+         "BlockDeviceMappings" : [
+            {
+              "DeviceName" : "/dev/xvda",
+               "Ebs" : { "VolumeSize" : { "Ref" : "DiskSize" }}
+            }
+         ]
+       }
+    }
+
+  },
+
+  "Outputs" : {
+    "ServerID" : {
+      "Description": "Server ID",
+      "Value" : { "Ref" : "NewServer" }
+    },
+    "PrivateIP" : {
+      "Description": "Private IP",
+      "Value" : { "Fn::GetAtt" : [ "NewServer", "PrivateIp" ]},
+    },
+    "PublicIP" : {
+      "Description": "Public IP",
+      "Value" : { "Fn::GetAtt" : [ "NewServer", "PublicIp" ]},
+    }
+  }
+}
