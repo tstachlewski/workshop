@@ -51,3 +51,40 @@ aws cloudformation create-stack --stack-name MyApp --template-body file://BasicA
 
 </p>
 </details>
+
+### 5. Zaktualizuj szablon 'BasicNetwork.yaml' - np. poprzez modyfikację tag-a Name i zaktualizuj utworzony wcześniej stack.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+aws cloudformation update-stack --stack-name BasicNetwork --template-body file://BasicNetwork.yaml
+```
+
+</p>
+</details>
+
+### 6. Zaktualizuj szablon 'BasicNetwork.yaml' - np. poprzez modyfikację adresacji jednej z podsieci i zaaktualizuj utworzony wcześniej stack.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+aws cloudformation update-stack --stack-name BasicNetwork --template-body file://BasicNetwork.yaml
+```
+
+</p>
+</details>
+
+### 7. Utwórz ChangeSet dla szablonu i zweryfikuj czy wprowadza jakieś zmiany.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+aws cloudformation create-change-set --stack-name BasicNetwork --template-body file://BasicNetwork.yaml --change-set-name MyChange
+aws cloudformation describe-change-set --stack-name BasicNetwork  --change-set-name MyChange
+```
+
+</p>
+</details>
