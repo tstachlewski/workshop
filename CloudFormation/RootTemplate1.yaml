@@ -1,0 +1,10 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Root Template'
+Resources:
+
+    NetworkResources:
+        Type: AWS::CloudFormation::Stack
+        Properties:
+            TemplateURL: https://s3-eu-west-1.amazonaws.com/testbucket123123123123123/BasicNetowork.yaml
+            
+ 

@@ -97,3 +97,16 @@ Resources:
         Properties:
             RouteTableId: !Ref PublicRouteTable
             SubnetId: !Ref SubnetPublic2
+
+
+Outputs:
+    VpcId: 
+        Value: !Ref VPC
+    PublicSubnet1:
+        Value: !Ref SubnetPublic1     
+    PublicSubnet2:
+        Value: !Ref SubnetPublic2
+    PrivateSubnet1:
+        Value: !Ref SubnetPrivate1
+    PrivateSubnet2:
+        Value: !Ref SubnetPrivate2

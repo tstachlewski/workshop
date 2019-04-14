@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Single Linux Server Template'
+
+Parameters: 
+    SubnetId: 
+        Type: String
+        Description: Subnet in which server will be created.
+    
+    
+Resources:
+    LinuxServer:
+        Type: AWS::EC2::Instance
+        Properties: 
+            ImageId: ami-9398d3e0
+            SubnetId: !Ref SubnetId
+
+
+Outputs:
+    ServerID: 
+        Value: !Ref LinuxServer
+    PrivateIP:
+        Value: !GetAtt LinuxServer.PrivateIp
+    PublicIP:
+        Value: !GetAtt LinuxServer.PublicIp    
