@@ -4,3 +4,4 @@
 - [Nested Stacks](cloudformation-nested.md)
 - [StackSets](cloudformation-stacksets.md)
 - [CustomResources](cloudformation-custom.md)
+- [Other](cloudformation-other.md)

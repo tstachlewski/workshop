@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Resources:
+
+  MyNamerLambda:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "my_makro.handler"
+      Role: !GetAtt MyNamerLambdaRole.Arn
+      Code:
+        S3Bucket: "my-custom-cfn-resource-1431324"
+        S3Key: "my_makro.zip"
+      Runtime: "python3.7"
+      MemorySize: 128
+      Timeout: 600
+
+
+  MyNamerLambdaRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: AdministratorAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: "*"
+                Resource: "*"
+       
+
+  TransformFunctionPermissions:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !GetAtt MyNamerLambda.Arn
+      Principal: 'cloudformation.amazonaws.com'
+      
+  Transform:
+    Type: AWS::CloudFormation::Macro
+    Properties:
+      Name: 'DescriptionFixer'
+      Description: Fixes CloudFormation stack descriptions
+      FunctionName: !GetAtt MyNamerLambda.Arn

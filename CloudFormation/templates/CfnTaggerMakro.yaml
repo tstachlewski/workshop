@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Resources:
+
+  TaggerMakroLambda:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "my_makro_tagger.handler"
+      Role: !GetAtt TaggerMakroLambdaRole.Arn
+      Code:
+        S3Bucket: "my-custom-cfn-resource-1431324"
+        S3Key: "my_makro_tagger.zip"
+      Runtime: "python3.7"
+      MemorySize: 128
+      Timeout: 600
+
+
+  TaggerMakroLambdaRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: AdministratorAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: "*"
+                Resource: "*"
+
+
+  TaggerMakroTransformFunctionPermissions:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !GetAtt TaggerMakroLambda.Arn
+      Principal: 'cloudformation.amazonaws.com'
+
+  Transform:
+    Type: AWS::CloudFormation::Macro
+    Properties:
+      Name: 'TaggerMakro'
+      Description: Fixes CloudFormation stack descriptions
+      FunctionName: !GetAtt TaggerMakroLambda.Arn

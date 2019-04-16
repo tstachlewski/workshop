@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'EIP Template'
+
+
+Resources:
+
+    EIP:
+        Type: AWS::EC2::EIP
+        Properties:
+          Domain: vpc
+
+
+Outputs:
+    EIP1:
+        Value: !Ref EIP
+        Export:
+            Name: EIP
+    EIPAllocationId1:
+        Value: !GetAtt EIP.AllocationId
+        Export:
+            Name: EIPAllocationId

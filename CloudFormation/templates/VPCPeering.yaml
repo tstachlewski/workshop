@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Network Template'
+
+
+Parameters: 
+
+  Network1: 
+    Type: String
+    Description: Stack name for Network1
+    
+  Network2: 
+    Type: String
+    Description: Stack name for Network1
+    
+Resources:
+
+    VPCPeering:
+        Type: AWS::EC2::VPCPeeringConnection
+        Properties: 
+            PeerVpcId: 
+                Fn::ImportValue: !Sub "${Network1}-VpcId"
+            VpcId: 
+                Fn::ImportValue: !Sub "${Network2}-VpcId"

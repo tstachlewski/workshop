@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'EIP Template'
+
+
+Resources:
+
+    SecurityGroup:
+        Type: AWS::EC2::SecurityGroup
+        Properties:
+          VpcId: !ImportValue "VpcId"
+          GroupDescription: Enable HTTP access via user defined port
+          SecurityGroupIngress:
+          - CidrIp: 0.0.0.0/0
+            FromPort: 80
+            IpProtocol: tcp
+            ToPort: 80
+        
+    NetworkInterface:
+        Type: AWS::EC2::NetworkInterface
+        Properties:
+          SubnetId: !ImportValue "PublicSubnet1"
+          GroupSet: 
+          - !Ref SecurityGroup
+          
+    AssociateControlPort:
+        Type: AWS::EC2::EIPAssociation
+        Properties:
+          AllocationId: !ImportValue "EIPAllocationId"
+          NetworkInterfaceId: !Ref NetworkInterface
+          
+    LinuxServer:
+        Type: AWS::EC2::Instance
+        Properties: 
+            ImageId: ami-08935252a36e25f85
+            NetworkInterfaces:
+                -
+                  NetworkInterfaceId: !Ref NetworkInterface
+                  DeviceIndex: 0
+            Tags:
+            -
+              Key: Name
+              Value: "My WWW Page"
+            UserData:
+                Fn::Base64: !Sub |
+                  #!/bin/bash
+                  yum update -y
+                  yum install -y httpd24 php56 mysql55-server php56-mysqlnd
+                  service httpd start
+                  chkconfig httpd on
+
