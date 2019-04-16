@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Resources:
+
+  CfnNotifierLambda:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "my_lambda.handler"
+      Role: !GetAtt CfnNotifierLambdaRole.Arn
+      Code:
+        S3Bucket: "my-custom-cfn-resource-1431324"
+        S3Key: "my_custom_cfn_resource.zip"
+      Runtime: "python3.7"
+      MemorySize: 128
+      Timeout: 600
+      Environment:
+        Variables:
+          PHONE: "0048123123123"
+
+  CfnNotifierLambdaRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: AdministratorAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: "*"
+                Resource: "*"
+       
+
+Outputs:
+    CfnNotifierLambdaARN: 
+        Value: !GetAtt CfnNotifierLambda.Arn
+        Export:
+            Name: CfnNotifierLambdaARN
