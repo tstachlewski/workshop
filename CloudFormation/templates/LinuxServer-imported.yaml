@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Single Linux Server Template'
+
+
+Resources:
+    LinuxServer:
+        Type: AWS::EC2::Instance
+        Properties:
+            ImageId: ami-9398d3e0
+            SubnetId: !ImportValue "PublicSubnet1"
+
+
+Outputs:
+    ServerID:
+        Value: !Ref LinuxServer
+    PrivateIP:
+        Value: !GetAtt LinuxServer.PrivateIp
+    PublicIP:
+        Value: !GetAtt LinuxServer.PublicIp    

@@ -1,7 +1,5 @@
-# CloudFormation - Podstawy CLI #
+# CloudFormation - Nested Stacks #
 
-## Wstęp ##
-Uruchom środowisko Cloud9 w regionie Irlandia. Po uruchomieniu się środowiska, skopiuj do niego plik 'BasicNetwork.yaml' - plik ten będziemy wykorzystywać przez większość część warsztatów.
 
 ### 0. Utwórz nowy bucket S3 i wrzuć do niego szablon BasicNetwork
 
@@ -50,6 +48,80 @@ aws cloudformation update-stack --stack-name RootTemplate --template-body file:/
 ```bash
 aws s3 cp LinuxServer.yaml s3://testbucket123123123123123/LinuxServer.yaml
 aws cloudformation update-stack --stack-name RootTemplate --template-body file://RootTemplate3.yaml
+```
+
+</p>
+</details>
+
+### 4. Skasuj poprzednie stacki. Utwórz ponownie stack BasicNework i opisz go CLI zwracając uwagę na jego sekcję outputs.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+aws cloudformation create-stack --stack-name BasicNetwork --template-body file://BasicNetwork.yaml
+aws cloudformation describe-stacks --stack-name BasicNetwork
+```
+
+</p>
+</details>
+
+### 4. Zmodyfikuj poprzedni stack i dodaj w Outputach parametr Export - dzięki, któremu zwracane wartości będą mogły być łatwo reużywalne w innych stackach.(hint: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html). Zweryfikuj czy parametry są widoczne w sekcji Exports w CloudFormation.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+aws cloudformation update-stack --stack-name BasicNetwork --template-body file://BasicNetwork-export.yaml
+```
+
+</p>
+</details>
+
+### 4. Wylistuj exporty CloudFormation w CLI.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+aws cloudformation list-exports
+```
+
+</p>
+</details>
+
+### 5. Wylistuj exporty CloudFormation w CLI.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+aws cloudformation list-exports
+```
+
+</p>
+</details>
+
+### 6. Przeanalizuj i utwórz stack LinuxServer-imported.yaml - gdzie wykorzystywana jest zmienna z poprzedniego stacka.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+aws cloudformation create-stack --stack-name LinuxServer --template-body file://LinuxServer-imported.yaml
+```
+
+</p>
+</details>
+
+
+### 7. Wylisuj stacki, które używają zmiennej eksportowej PublicSubnet1
+
+<details><summary>show</summary>
+<p>
+
+```bash
+aws cloudformation list-imports --export-name PublicSubnet1
 ```
 
 </p>
