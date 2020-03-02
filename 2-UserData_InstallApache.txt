@@ -7,8 +7,11 @@ chkconfig httpd on
 cat <<EOF> /var/www/html/index.html
 <html>
 	<body>
-		<h1> This is simple webpage hosted on EC2 instance</h1>
-		<p> This is working! </p>
+    <br/><br/><br/>
+    <div style="text-align:center;">
+      <img src="https://awspoland.s3-eu-west-1.amazonaws.com/cloud.png" align="middle">
+      <h1> Cloudy page!!!</h1>
+    </div>
 	</body>
 </html>
 EOF
